@@ -24,11 +24,14 @@ messaging.onBackgroundMessage(function(payload) {
   const notificationTitle = payload.notification.title;
   const notificationOptions = {
     body: payload.notification.body,
-    icon: payload.notification.icon
+    icon: payload.notification.icon || "https://avatars.githubusercontent.com/u/5148773?s=50&v=4",
+    actions: [
+        {
+            action: payload.fcmOptions.link || "https://www.reiterablecoffee.com/"
+        }
+    ]
   };
 
   self.registration.showNotification(notificationTitle,
     notificationOptions);
 });
-
-
