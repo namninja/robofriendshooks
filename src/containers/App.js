@@ -7,6 +7,8 @@ import './App.css';
 import { fetchToken, onMessageListener } from './firebase';
 import { Button, Toast } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { initializeApp } from "firebase/app";
+import { getMessaging, getToken, onMessage } from "firebase/messaging";
 
 function App() {
     // constructor() {

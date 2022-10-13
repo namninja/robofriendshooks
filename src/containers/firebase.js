@@ -64,6 +64,10 @@ export const onMessageListener = () =>
   new Promise((resolve) => {
     onMessage(messaging, (payload) => {
       console.log("onMessageListener resolved")
+      console.log("the payload ", payload)
       resolve(payload);
     });
   });
+
+ 
+ 
