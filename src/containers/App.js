@@ -34,7 +34,8 @@ function App() {
 
     onMessageListener().then(payload => {
         console.log("message payload: " + JSON.stringify(payload));
-        setNotification({ title: payload.notification.title, body: payload.notification.body, action: payload.fcmOptions.link })
+        //setNotification({ title: payload.notification.title, body: payload.notification.body, action: payload.fcmOptions.link })
+        setNotification({ title: payload.data.title, body: payload.data.body, action: payload.data.click_action })
         setShow(true);
         
     }).catch(err => console.log('failed: ', err));
@@ -48,6 +49,19 @@ function App() {
         fetch('https://jsonplaceholder.typicode.com/users')
             .then(response => response.json())
             .then(users => { setRobots(users) })
+
+            navigator.serviceWorker.addEventListener('message', (event) => {
+                if (!event.data.action) {
+                  return
+                }
+              
+                switch (event.data.action) {
+                  case 'redirect-from-notificationclick':
+                    window.location.href = event.data.url
+                    break
+                  // no default
+                }
+              })
 
     }, []) //add optional list to tell when to stop useEffect.  An Empty list will only tell useEffect to run once.
 

@@ -45,7 +45,7 @@ export const fetchToken = (setTokenFound) => {
         redirect: 'follow'
       };
 
-      fetch("https://api.iterable.com/api/users/registerBrowserToken\n", requestOptions)
+      fetch("https://api.iterable.com/api/users/registerBrowserToken", requestOptions)
         .then(response => response.text())
         .then(result => console.log(result))
         .catch(error => console.log('error', error));
