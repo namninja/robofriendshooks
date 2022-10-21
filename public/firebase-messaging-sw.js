@@ -20,7 +20,6 @@ firebase.initializeApp(firebaseConfig);
 class CustomPushEvent extends Event {
   constructor(data) {
     super('push');
-
     Object.assign(this, data);
     this.custom = true;
   }
@@ -58,6 +57,7 @@ self.addEventListener('push', (e) => {
 
 // display background push message
 const messaging = firebase.messaging();
+
 messaging.onBackgroundMessage((payload) => {
   console.log('[firebase-messaging-sw.js] Received background message ', payload); // debug info
   console.log(payload)
@@ -74,44 +74,22 @@ messaging.onBackgroundMessage((payload) => {
 self.addEventListener('notificationclick', (event) => {
   console.log('[firebase-messaging-sw.js] notificationclick ', event); // debug info
   console.log(event);
-  // event.notification.close();
-  //   //click_action described at https://github.com/BrunoS3D/firebase-messaging-sw.js#click-action
-  //   if (event.notification.data && event.notification.data.click_action) {
-  //   console.log("hereI am")
-  //   self.clients.openWindow(event.notification.data.click_action);
-  //   } else {
-  //     self.clients.openWindow(event.currentTarget.origin);
-  //   }
-
-
+ // must close the notification
+ event.notification.close();
   let url = "http://localhost:3000" // set defaul root domain of website
 
   // check to see if event payload contains click_action URL for redirect
   if (event.notification.data && event.notification.data.click_action) {
     url = event.notification.data.click_action
   }
-
   console.log(url)
-  // must close the notification
-  event.notification.close();
+ 
   // create a URL object to access root domain of click_action URL
   let destinationUrl = new URL(url)
   // build root domain so that the format matches what is pulled from the browser
   let originalUrl = destinationUrl.origin + destinationUrl.pathname
   console.log(originalUrl)
 
-  // event.waitUntil(
-  //   clients.matchAll({includeUncontrolled: true, type: 'window'})
-  //     .then(clients => clients.filter(client => client.url === originalUrl))
-  //     .then(matchingClients => {
-  //       if (matchingClients[0]) {
-  //         return matchingClients[0].navigate(url)
-  //                  .then(client => client.focus());
-  //       }
-
-  //       return clients.openWindow(url);
-  //     })
-  // );
   // Filter through the browser tabs and identify the URL where the Push originated and bring it back into focus, instead of opening a new tab
   event.waitUntil(
     clients.matchAll({ includeUncontrolled: true, type: 'window' }).then(windowClients => {
@@ -135,6 +113,16 @@ self.addEventListener('notificationclick', (event) => {
       }
     }));
 })
+
+//2nd try
+  // event.notification.close();
+  //   //click_action described at https://github.com/BrunoS3D/firebase-messaging-sw.js#click-action
+  //   if (event.notification.data && event.notification.data.click_action) {
+  //   console.log("hereI am")
+  //   self.clients.openWindow(event.notification.data.click_action);
+  //   } else {
+  //     self.clients.openWindow(event.currentTarget.origin);
+  //   }
 
 //Original
 // // Scripts for firebase and firebase messaging
