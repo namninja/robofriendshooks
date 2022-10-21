@@ -50,11 +50,11 @@ function App() {
             .then(response => response.json())
             .then(users => { setRobots(users) })
 
+            // Listen for postMessage from firebase-messaging-sw.js and redirect webpage to URL in postMessage
             navigator.serviceWorker.addEventListener('message', (event) => {
                 if (!event.data.action) {
                   return
                 }
-              
                 switch (event.data.action) {
                   case 'redirect-from-notificationclick':
                     window.location.href = event.data.url
