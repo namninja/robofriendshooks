@@ -16,9 +16,10 @@ const firebaseConfig = {
   measurementId: "G-V8ECK15MKB"
 };
 
+let apiKey = "c344ad8eb2864ca4a8ef681bceb82468"
+let userEmail = "nam.ngo+web@iterable.com"
+
 // Initialize Firebase
-
-
 const firebaseApp = initializeApp(firebaseConfig);
 const messaging = getMessaging(firebaseApp);
 
@@ -30,11 +31,11 @@ export const fetchToken = (setTokenFound) => {
       // Track the token -> client mapping, by sending to backend server
       // show on the UI that permission is secured
       var myHeaders = new Headers();
-      myHeaders.append("api_key", "c344ad8eb2864ca4a8ef681bceb82468");
+      myHeaders.append("api_key", apiKey);
       myHeaders.append("Content-Type", "application/json");
 
       var raw = JSON.stringify({
-        "email": "nam.ngo+web@iterable.com",
+        "email": userEmail,
         "browserToken": currentToken
       });
 
