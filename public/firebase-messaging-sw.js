@@ -147,7 +147,6 @@ self.addEventListener('notificationclick', (event) => {
 // const messaging = firebase.messaging();
 
 // messaging.onBackgroundMessage(function(payload) {
-//   debugger;
 //   console.log('Received background message ', JSON.stringify(payload));
 //   console.log(payload)
 //   const notificationTitle = payload.notification.title;

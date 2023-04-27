@@ -16,8 +16,8 @@ const firebaseConfig = {
   measurementId: "G-V8ECK15MKB"
 };
 
-let apiKey = "c344ad8eb2864ca4a8ef681bceb82468"
-let userEmail = "nam.ngo+web@iterable.com"
+let apiKey = "7b84bb10d87c4be69656670f2e8b5479"
+let userEmail = "nam.ngo+digitest@iterable.com"
 
 // Initialize Firebase
 const firebaseApp = initializeApp(firebaseConfig);
