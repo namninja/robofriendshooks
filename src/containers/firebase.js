@@ -117,7 +117,7 @@ export const fetchToken = async (setTokenFound) => {
         redirect: 'follow'
       };
       
-      fetch("/api/subscriptions/messageType/" + 115895 + "/user/" + userEmail, subRequestOptions)
+      fetch("/api/subscriptions/messageType/" + messageTypeId + "/user/" + userEmail, subRequestOptions)
         .then(response => response.text())
         .then(result => console.log(result))
         .catch(error => console.log('error', error));
@@ -166,7 +166,7 @@ export const fetchToken = async (setTokenFound) => {
         redirect: 'follow'
       };
       
-      fetch("https://api.iterable.com/api/subscriptions/messageType/" + 115895 + "/user/" + userEmail, unsubRequestOptions)
+      fetch("https://api.iterable.com/api/subscriptions/messageType/" + messageTypeId + "/user/" + userEmail, unsubRequestOptions)
         .then(response => response.text())
         .then(result => console.log(result))
         .catch(error => console.log('error', error));
