@@ -2,6 +2,7 @@
   "name": "robofriends",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://robotfriendsfb.herokuapp.com/",
   "proxy": "https://api.iterable.com",
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.2",
