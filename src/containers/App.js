@@ -7,8 +7,7 @@ import './App.css';
 import { fetchToken, onMessageListener } from './firebase';
 import { Button, Toast } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { initializeApp } from "firebase/app";
-import { getMessaging, getToken, onMessage } from "firebase/messaging";
+
 
 function App() {
     // constructor() {
@@ -103,8 +102,8 @@ function App() {
                 </a>
                 <div className='tc'>
                     <Button onClick={() => onShowNotificationClicked()}>Show Toast</Button>
-                    {isTokenFound && <h1> Notification permission enabled 👍🏻 </h1>}
-                    {!isTokenFound && <h1> Need notification permission ❗️ </h1>}
+                    {isTokenFound && <h1> Notification permission enabled</h1>}
+                    {!isTokenFound && <h1> Need notification permission</h1>}
                     <h1 className='f1'>RobotFriends</h1>
                     <button onClick={() => setCount(count + 1)}>Click Me!</button>
                     <h3 className='f1'>{count}</h3>

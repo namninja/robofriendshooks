@@ -1,6 +1,6 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getMessaging, getToken, onMessage, deleteToken } from "firebase/messaging";
+import { getMessaging, getToken, onMessage } from "firebase/messaging";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -92,7 +92,7 @@ const firebaseConfig = {
 let apiKey = "7b84bb10d87c4be69656670f2e8b5479";
 let ss_apiKey = "fc87af3bba4b44ff8a53680bd7a1b5b3"
 let userEmail = "nam.ngo+digitest@iterable.com";
-
+let messageTypeId = "104139"
 
 const firebaseApp = initializeApp(firebaseConfig);
 const messaging = getMessaging(firebaseApp);
@@ -117,7 +117,7 @@ export const fetchToken = async (setTokenFound) => {
         redirect: 'follow'
       };
       
-      fetch("https://api.iterable.com/api/subscriptions/messageType/115895/user/" + userEmail, subRequestOptions)
+      fetch("/api/subscriptions/messageType/" + 115895 + "/user/" + userEmail, subRequestOptions)
         .then(response => response.text())
         .then(result => console.log(result))
         .catch(error => console.log('error', error));
@@ -132,7 +132,7 @@ export const fetchToken = async (setTokenFound) => {
         const raw = JSON.stringify({
           "email": userEmail,
           "dataFields": {
-            "browserToken": [
+            "browserTokens": [
               currentToken
             ]
           }
@@ -166,7 +166,7 @@ export const fetchToken = async (setTokenFound) => {
         redirect: 'follow'
       };
       
-      fetch("https://api.iterable.com/api/subscriptions/messageType/115895/user/" + userEmail, unsubRequestOptions)
+      fetch("https://api.iterable.com/api/subscriptions/messageType/" + 115895 + "/user/" + userEmail, unsubRequestOptions)
         .then(response => response.text())
         .then(result => console.log(result))
         .catch(error => console.log('error', error));
