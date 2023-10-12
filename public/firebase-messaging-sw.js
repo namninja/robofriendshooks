@@ -59,6 +59,7 @@ self.addEventListener('push', (e) => {
 const messaging = firebase.messaging();
 
 messaging.onBackgroundMessage((payload) => {
+  
   console.log('[firebase-messaging-sw.js] Received background message ', payload); // debug info
   console.log(payload)
   const { title, body, icon, ...restPayload } = payload.data;
@@ -71,6 +72,7 @@ messaging.onBackgroundMessage((payload) => {
 });
 
 // This Event Listener listens for a notificationclick, specifically, when a user clicks on the background web push
+  
 self.addEventListener('notificationclick', (event) => {
   console.log('[firebase-messaging-sw.js] notificationclick ', event); // debug info
   console.log(event);
@@ -113,6 +115,8 @@ self.addEventListener('notificationclick', (event) => {
       }
     }));
 })
+
+
 
 //2nd try
   // event.notification.close();
