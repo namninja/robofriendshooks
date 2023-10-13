@@ -92,8 +92,9 @@ const firebaseConfig = {
 let apiKey = "7b84bb10d87c4be69656670f2e8b5479";
 let ss_apiKey = "fc87af3bba4b44ff8a53680bd7a1b5b3"
 let userEmail = "nam.ngo+digitest@iterable.com";
-let messageTypeId = "104139"
-
+let messageTypeId = "115895"
+let didSubscribe = false
+let didUnsubscribe = false
 const firebaseApp = initializeApp(firebaseConfig);
 const messaging = getMessaging(firebaseApp);
 
@@ -108,19 +109,22 @@ export const fetchToken = async (setTokenFound) => {
 
     if (permission === 'granted') {
       // Permission is granted, proceed with token fetching
-      const subHeaders = new Headers();
-      subHeaders.append("api_key", ss_apiKey);
-      subHeaders.append("Content-Type", "application/json");
-      var subRequestOptions = {
-        method: 'PATCH',
-        headers: subHeaders,
-        redirect: 'follow'
-      };
-      
-      fetch("/api/subscriptions/messageType/" + messageTypeId + "/user/" + userEmail, subRequestOptions)
-        .then(response => response.text())
-        .then(result => console.log(result))
-        .catch(error => console.log('error', error));
+      if (!didSubscribe) {
+        const subHeaders = new Headers();
+        subHeaders.append("api_key", ss_apiKey);
+        subHeaders.append("Content-Type", "application/json");
+        var subRequestOptions = {
+          method: 'PATCH',
+          headers: subHeaders,
+          redirect: 'follow'
+        };
+        
+        fetch("/api/subscriptions/messageType/" + messageTypeId + "/user/" + userEmail, subRequestOptions)
+          .then(response => response.text())
+          .then(result => console.log(result))
+          .catch(error => console.log('error', error));
+          didSubscribe = true
+      }
 
       console.log("me")
       const currentToken = await getToken(messaging, { vapidKey: 'BFDo_pQlZx6E4rm81Cb0l399lEM63gS0nSgeIECKyBUUnh9kQQEXgTm8XfXqZuia51Plc1dz1aRRxjZCIPFV0mc' });
@@ -157,6 +161,7 @@ export const fetchToken = async (setTokenFound) => {
       }
     } else {
       console.log('Notification permission denied.');
+      if (!didUnsubscribe) {
       const unsubHeaders = new Headers();
       unsubHeaders.append("api_key", ss_apiKey);
       unsubHeaders.append("Content-Type", "application/json");
@@ -171,6 +176,8 @@ export const fetchToken = async (setTokenFound) => {
         .then(result => console.log(result))
         .catch(error => console.log('error', error));
       setTokenFound(false);
+      didUnsubscribe = true
+    }
     }
   } catch (err) {
     console.log('An error occurred while retrieving or updating token. ', err);
