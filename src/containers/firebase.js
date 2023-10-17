@@ -6,16 +6,24 @@ import { getMessaging, getToken, onMessage } from "firebase/messaging";
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+// const firebaseConfig = {
+//   apiKey: "AIzaSyDoUqGAfBBuuqqpIjyfLQT8MfB4PXD9Nh8",
+//   authDomain: "iterablecoffee.firebaseapp.com",
+//   projectId: "iterablecoffee",
+//   storageBucket: "iterablecoffee.appspot.com",
+//   messagingSenderId: "675775245867",
+//   appId: "1:675775245867:web:f60af66014be13cdbb846e",
+//   measurementId: "G-V8ECK15MKB"
+// };
 const firebaseConfig = {
-  apiKey: "AIzaSyDoUqGAfBBuuqqpIjyfLQT8MfB4PXD9Nh8",
+  apiKey: "AIzaSyA6RiOyGxu5MjFoeHtJ6cAFID8GjnBFAk0",
   authDomain: "iterablecoffee.firebaseapp.com",
   projectId: "iterablecoffee",
   storageBucket: "iterablecoffee.appspot.com",
   messagingSenderId: "675775245867",
-  appId: "1:675775245867:web:f60af66014be13cdbb846e",
-  measurementId: "G-V8ECK15MKB"
+  appId: "1:675775245867:web:c6b7690a148b297abb846e",
+  measurementId: "G-NTD9MQNCE8"
 };
-
 // let apiKey = "7b84bb10d87c4be69656670f2e8b5479"
 // let userEmail = "nam.ngo+digitest@iterable.com"
 
@@ -92,7 +100,7 @@ const firebaseConfig = {
 let apiKey = "7b84bb10d87c4be69656670f2e8b5479";
 let ss_apiKey = "fc87af3bba4b44ff8a53680bd7a1b5b3"
 let userEmail = "nam.ngo+digitest@iterable.com";
-let messageTypeId = "115895"
+let messageTypeId = "104139"
 let didSubscribe = false
 let didUnsubscribe = false
 const firebaseApp = initializeApp(firebaseConfig);
@@ -130,16 +138,34 @@ export const fetchToken = async (setTokenFound) => {
       const currentToken = await getToken(messaging, { vapidKey: 'BFDo_pQlZx6E4rm81Cb0l399lEM63gS0nSgeIECKyBUUnh9kQQEXgTm8XfXqZuia51Plc1dz1aRRxjZCIPFV0mc' });
 
       if (currentToken) {
+
         const myHeaders = new Headers();
         myHeaders.append("api_key", apiKey);
         myHeaders.append("Content-Type", "application/json");
-        const raw = JSON.stringify({
+        
+        var userRaw = JSON.stringify({
           "email": userEmail,
           "dataFields": {
-            "browserTokens": [
-              currentToken
-            ]
+            "robotfriends": currentToken
           }
+        });
+        
+        var userRequestOptions = {
+          method: 'POST',
+          headers: myHeaders,
+          body: userRaw,
+          redirect: 'follow'
+        };
+        
+        fetch("https://api.iterable.com/api/users/update", userRequestOptions)
+          .then(response => response.text())
+          .then(result => console.log(result))
+          .catch(error => console.log('error', error));
+
+
+        const raw = JSON.stringify({
+          "email": userEmail,
+            "browserToken": currentToken
         });
 
         const requestOptions = {
@@ -150,7 +176,7 @@ export const fetchToken = async (setTokenFound) => {
         };
 
         // Asynchronously set the new or current token
-        const registerResponse = await fetch("https://api.iterable.com/api/users/update", requestOptions);
+        const registerResponse = await fetch("https://api.iterable.com/api/users/registerBrowserToken", requestOptions);
         const registerResult = await registerResponse.text();
         console.log(registerResult);
 

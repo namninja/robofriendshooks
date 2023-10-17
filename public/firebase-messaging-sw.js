@@ -3,14 +3,23 @@ importScripts('https://www.gstatic.com/firebasejs/9.2.0/firebase-app-compat.js')
 importScripts('https://www.gstatic.com/firebasejs/9.2.0/firebase-messaging-compat.js');
 
 // Initialize the Firebase app in the service worker by passing the generated config
+// const firebaseConfig = {
+//   apiKey: "AIzaSyDoUqGAfBBuuqqpIjyfLQT8MfB4PXD9Nh8",
+//   authDomain: "iterablecoffee.firebaseapp.com",
+//   projectId: "iterablecoffee",
+//   storageBucket: "iterablecoffee.appspot.com",
+//   messagingSenderId: "675775245867",
+//   appId: "1:675775245867:web:f60af66014be13cdbb846e",
+//   measurementId: "G-V8ECK15MKB"
+// };
 const firebaseConfig = {
-  apiKey: "AIzaSyDoUqGAfBBuuqqpIjyfLQT8MfB4PXD9Nh8",
+  apiKey: "AIzaSyA6RiOyGxu5MjFoeHtJ6cAFID8GjnBFAk0",
   authDomain: "iterablecoffee.firebaseapp.com",
   projectId: "iterablecoffee",
   storageBucket: "iterablecoffee.appspot.com",
   messagingSenderId: "675775245867",
-  appId: "1:675775245867:web:f60af66014be13cdbb846e",
-  measurementId: "G-V8ECK15MKB"
+  appId: "1:675775245867:web:c6b7690a148b297abb846e",
+  measurementId: "G-NTD9MQNCE8"
 };
 
 firebase.initializeApp(firebaseConfig);
