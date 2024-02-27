@@ -12,6 +12,8 @@ importScripts('https://www.gstatic.com/firebasejs/9.2.0/firebase-messaging-compa
 //   appId: "1:675775245867:web:f60af66014be13cdbb846e",
 //   measurementId: "G-V8ECK15MKB"
 // };
+let campaignId = ""
+let messageId = ""
 const firebaseConfig = {
   apiKey: "AIzaSyA6RiOyGxu5MjFoeHtJ6cAFID8GjnBFAk0",
   authDomain: "iterablecoffee.firebaseapp.com",
@@ -71,6 +73,8 @@ messaging.onBackgroundMessage((payload) => {
   
   console.log('[firebase-messaging-sw.js] Received background message ', payload); // debug info
   console.log(payload)
+  campaignId = parseInt(payload.data.campaignId, 10)
+  messageId = payload.data.messageId
   const { title, body, icon, ...restPayload } = payload.data;
   const notificationOptions = {
     body,
@@ -83,6 +87,29 @@ messaging.onBackgroundMessage((payload) => {
 // This Event Listener listens for a notificationclick, specifically, when a user clicks on the background web push
   
 self.addEventListener('notificationclick', (event) => {
+
+  var myHeaders = new Headers();
+  myHeaders.append("Content-Type", "application/json");
+  myHeaders.append("api_key", "7b84bb10d87c4be69656670f2e8b5479");
+
+  var raw = JSON.stringify({
+    "email": "nam.ngo+digitest@iterable.com",
+      "messageId": messageId,
+      "campaignId": campaignId,
+    
+  });
+
+  var requestOptions = {
+    method: 'POST',
+    headers: myHeaders,
+    body: raw,
+    redirect: 'follow'
+  };
+
+fetch("https://api.iterable.com/api/events/trackWebPushClick", requestOptions)
+  .then(response => response.text())
+  .then(result => console.log(result))
+  .catch(error => console.log('error', error));
   console.log('[firebase-messaging-sw.js] notificationclick ', event); // debug info
   console.log(event);
  // must close the notification

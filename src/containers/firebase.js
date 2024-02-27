@@ -99,8 +99,11 @@ const firebaseConfig = {
 
 let apiKey = "7b84bb10d87c4be69656670f2e8b5479";
 let ss_apiKey = "fc87af3bba4b44ff8a53680bd7a1b5b3"
+// let apiKey = "ff5502e639a94001bbff68b962c28616";
+// let ss_apiKey = "0172dd49a26c4a158837337ab17d3dbf"
 let userEmail = "nam.ngo+digitest@iterable.com";
-let messageTypeId = "104139"
+//let userId = "95f7d936cdadd3a450325375d80552d63de51907643466f05d08e10ec1ec539f"
+let messageTypeId = "115895"
 let didSubscribe = false
 let didUnsubscribe = false
 const firebaseApp = initializeApp(firebaseConfig);
@@ -118,6 +121,7 @@ export const fetchToken = async (setTokenFound) => {
     if (permission === 'granted') {
       // Permission is granted, proceed with token fetching
       if (!didSubscribe) {
+        didSubscribe = true
         const subHeaders = new Headers();
         subHeaders.append("api_key", ss_apiKey);
         subHeaders.append("Content-Type", "application/json");
@@ -131,14 +135,14 @@ export const fetchToken = async (setTokenFound) => {
           .then(response => response.text())
           .then(result => console.log(result))
           .catch(error => console.log('error', error));
-          didSubscribe = true
+          
       }
 
-      console.log("me")
+      
       const currentToken = await getToken(messaging, { vapidKey: 'BFDo_pQlZx6E4rm81Cb0l399lEM63gS0nSgeIECKyBUUnh9kQQEXgTm8XfXqZuia51Plc1dz1aRRxjZCIPFV0mc' });
 
       if (currentToken) {
-
+        console.log(currentToken)
         const myHeaders = new Headers();
         myHeaders.append("api_key", apiKey);
         myHeaders.append("Content-Type", "application/json");
@@ -163,6 +167,7 @@ export const fetchToken = async (setTokenFound) => {
           .catch(error => console.log('error', error));
 
 
+        
         const raw = JSON.stringify({
           "email": userEmail,
             "browserToken": currentToken
